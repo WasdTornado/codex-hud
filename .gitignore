@@ -21,3 +21,4 @@ __pycache__/
 /docs/*
 !/docs/DEVELOPMENT.md
 !/docs/RELEASING.md
+!/docs/images/
