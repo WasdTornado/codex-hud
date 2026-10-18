@@ -1,0 +1,9 @@
+{
+  "name": "Codex HUD",
+  "displayName": "Codex HUD",
+  "bundleIdentifier": "com.wasdtornado.codexhud",
+  "version": "1.1.2",
+  "build": "9",
+  "author": "wasdTornado",
+  "minimumMacOS": "26.0"
+}
