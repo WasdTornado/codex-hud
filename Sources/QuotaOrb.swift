@@ -150,6 +150,8 @@ final class QuotaOrb: NSObject, NSApplicationDelegate, NSWindowDelegate {
     let menuBarStatus = MenuBarStatus()
     var updateMenuItem: NSMenuItem!
     var automaticUpdatesMenuItem: NSMenuItem!
+    var desktopHUDMenuItem: NSMenuItem!
+    var desktopHUDVisible = true
     var appUpdater: AppUpdater?
     var quota = QuotaSnapshot.empty
     var layoutKey = ""
@@ -190,6 +192,7 @@ final class QuotaOrb: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let args = CommandLine.arguments
         if let i = args.firstIndex(of: "--preview"), args.count > i + 1 { previewFile = args[i + 1] }
         if previewFile == nil { previewFile = Bundle.main.object(forInfoDictionaryKey: "QuotaPreviewFile") as? String }
+        desktopHUDVisible = !defaults.bool(forKey: "desktopHUDHidden")
         orb = panel(size: NSSize(width: 58, height: 58), title: "Codex HUD · 额度小球")
         // 小球只处理点击和拖动，键盘焦点交给展开后的详情。
         orb.acceptsKeyboardFocus = false
@@ -231,7 +234,7 @@ final class QuotaOrb: NSObject, NSApplicationDelegate, NSWindowDelegate {
             DispatchQueue.main.async { self?.applySystemAppearance() }
         }
         applySystemAppearance()
-        orb.orderFrontRegardless()
+        if desktopHUDVisible { orb.orderFrontRegardless() }
     }
 
     func applySystemAppearance() {
@@ -426,6 +429,7 @@ final class QuotaOrb: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     func setExpanded(_ value: Bool) {
+        guard desktopHUDVisible || !value else { return }
         expanded = value
         if value {
             render()
@@ -471,6 +475,8 @@ final class QuotaOrb: NSObject, NSApplicationDelegate, NSWindowDelegate {
         menu.addItem(withTitle: previewFile == nil ? "Codex HUD · 额度小球" : "Codex HUD · 预览数据", action: nil, keyEquivalent: "").isEnabled = false
         menu.addItem(.separator())
         menu.addItem(withTitle: "刷新额度", action: #selector(refresh), keyEquivalent: "r").target = self
+        desktopHUDMenuItem = menu.addItem(withTitle: "显示桌面悬浮窗", action: #selector(toggleDesktopHUD), keyEquivalent: "")
+        desktopHUDMenuItem.target = self
         menu.addItem(withTitle: "显示 / 收起详情", action: #selector(toggleDetails), keyEquivalent: "i").target = self
         menu.addItem(withTitle: "靠左停靠", action: #selector(dockLeft), keyEquivalent: "[").target = self
         menu.addItem(withTitle: "靠右停靠", action: #selector(dockRight), keyEquivalent: "]").target = self
@@ -485,6 +491,38 @@ final class QuotaOrb: NSObject, NSApplicationDelegate, NSWindowDelegate {
         statusItem.menu = menu
         let appMenu = NSMenu(), root = NSMenuItem()
         root.submenu = menu.copy() as? NSMenu; appMenu.addItem(root); NSApplication.shared.mainMenu = appMenu
+        renderDesktopHUDState()
+    }
+
+    func renderDesktopHUDState() {
+        // 菜单栏与应用菜单各有一份菜单，同步勾选状态和依赖浮窗的操作。
+        let menus = [statusItem.menu, NSApp.mainMenu?.items.first?.submenu]
+        for menu in menus {
+            for item in menu?.items ?? [] {
+                if item.action == #selector(toggleDesktopHUD) {
+                    item.state = desktopHUDVisible ? .on : .off
+                    item.toolTip = "隐藏小球或胶囊后，菜单栏额度仍会正常刷新"
+                } else if [#selector(toggleDetails), #selector(dockLeft), #selector(dockRight)].contains(item.action) {
+                    item.isEnabled = desktopHUDVisible
+                }
+            }
+        }
+    }
+
+    @objc func toggleDesktopHUD() {
+        desktopHUDVisible.toggle()
+        defaults.set(!desktopHUDVisible, forKey: "desktopHUDHidden")
+        if desktopHUDVisible {
+            constrainOrb()
+            orb.orderFrontRegardless()
+        } else {
+            // 立即停止详情动画，避免计时器或残留详情让已隐藏的窗口重新出现。
+            expanded = false; reveal = 0; velocity = 0
+            motionTimer?.invalidate(); motionTimer = nil
+            details.orderOut(nil)
+            orb.orderOut(nil)
+        }
+        renderDesktopHUDState()
     }
 
     func render() {
