@@ -13,6 +13,16 @@ fn native_launch(root:&Path,cmd:bool)->client::Launch{
         // ASCII 包装器通过自身目录定位原生假服务；空格/Unicode 均来自真实文件路径。
         std::fs::write(root.join("codex.cmd"),b"@echo off\r\necho wrapper-started> wrapper.txt\r\n\"%~dp0fixture.exe\" %* 2> fixture-error.txt\r\n").unwrap();
     }
+    if cmd {
+        eprintln!("cmd fixture path={}",root.display());
+        // 只探测固定 echo，捕获 cmd 对测试路径/引号的诊断；不调用真实 CLI。
+        use std::os::windows::process::CommandExt;
+        let mut probe=std::process::Command::new(std::path::PathBuf::from(std::env::var_os("SystemRoot").unwrap()).join("System32/cmd.exe"));
+        let output=probe.args(["/d","/v:off","/s","/c"]).raw_arg(format!("\"\"{}\"\"",root.join("probe.cmd").display()));
+        std::fs::write(root.join("probe.cmd"),b"@echo probe-ok\r\n").unwrap();
+        let output=output.output().unwrap();
+        eprintln!("probe status={} stdout={} stderr={}",output.status,String::from_utf8_lossy(&output.stdout),String::from_utf8_lossy(&output.stderr));
+    }
     let launch=client::discover_in(&[root.to_path_buf()]).unwrap();
     assert_eq!(launch.executable,root.join(if cmd{"codex.cmd"}else{"codex.exe"}));launch
 }
