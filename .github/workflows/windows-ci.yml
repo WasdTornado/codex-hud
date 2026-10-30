@@ -37,9 +37,16 @@ jobs:
       - name: Demo startup process smoke (not interactive acceptance)
         run: |
           $exe = Join-Path $PWD 'Windows/src-tauri/target/debug/codex-hud-windows.exe'
-          $process = Start-Process -FilePath $exe -PassThru
+          $env:RUST_BACKTRACE = '1'
+          $stderr = Join-Path $env:RUNNER_TEMP 'hud-demo-stderr.txt'
+          $stdout = Join-Path $env:RUNNER_TEMP 'hud-demo-stdout.txt'
+          $process = Start-Process -FilePath $exe -PassThru -RedirectStandardError $stderr -RedirectStandardOutput $stdout
           try {
-            if ($process.WaitForExit(10000)) { throw "Demo exited early: $($process.ExitCode)" }
+            if ($process.WaitForExit(10000)) {
+              Get-Content $stderr
+              Get-Content $stdout
+              throw "Demo exited early: $($process.ExitCode)"
+            }
             Write-Output 'Demo process remained running for 10 seconds; appearance and interaction NOT verified.'
           } finally {
             if (-not $process.HasExited) { Stop-Process -Id $process.Id }
