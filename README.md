@@ -1,24 +1,28 @@
 <p align="center">
-  <img src="Assets/HUDIcon.icon/Assets/Artwork.png" width="104" height="104" alt="Codex HUD 应用图标">
+  <a href="https://wasdtornado.github.io/codex-hud-releases/"><img src="docs/images/website-banner.svg" width="100%" alt="Codex HUD — 保持专注，掌握余量。原生 macOS 额度工具，82% 为示意数据。"></a>
+</p>
+
+<p align="center">
+  <img src="Assets/HUDIcon.icon/Assets/Artwork.png" width="64" height="64" alt="Codex HUD 应用图标">
 </p>
 
 <h1 align="center">Codex HUD</h1>
-
-<p align="center"><strong>把 Codex 剩余额度，放在桌面一角。</strong></p>
-
+<p align="center"><strong>小小一角。心中有数。</strong></p>
 <p align="center">小球常驻桌面，点击查看详情。每 5 小时与每周额度，一眼就知道。</p>
 
 <p align="center">
-  <a href="https://github.com/WasdTornado/codex-hud-releases/releases/latest"><strong>下载 macOS 版</strong></a>
-  &nbsp;·&nbsp;
+  <a href="https://wasdtornado.github.io/codex-hud-releases/"><strong>访问官网 ↗</strong></a>
+  &nbsp; · &nbsp;
+  <a href="https://github.com/WasdTornado/codex-hud-releases/releases/download/v1.1.3/Codex-HUD-1.1.3-arm64.dmg"><strong>直接下载 v1.1.3 DMG ↓</strong></a>
+  &nbsp; · &nbsp;
   <a href="#下载安装">安装说明</a>
-  &nbsp;·&nbsp;
-  <a href="#应用更新">如何更新</a>
-  &nbsp;·&nbsp;
-  <a href="docs/DEVELOPMENT.md">开发文档</a>
+  &nbsp; · &nbsp;
+  <a href="#应用更新">应用更新</a>
 </p>
 
-<p align="center"><sub>macOS 26+ &nbsp; / &nbsp; Apple Silicon &nbsp; / &nbsp; 原生 Swift &nbsp; / &nbsp; MIT License</sub></p>
+<p align="center"><sub>macOS 26+ &nbsp; / &nbsp; Apple Silicon &nbsp; / &nbsp; 原生 Swift &nbsp; / &nbsp; MIT 开源</sub></p>
+
+> **先体验，再安装。** [打开官网](https://wasdtornado.github.io/codex-hud-releases/)，试试额度展开、单／双周期和浅深外观。官网里的数值是交互示例；下方展示应用的实际运行效果。
 
 ## 看一眼，就够了
 
@@ -75,7 +79,7 @@
 **运行要求：Apple Silicon（M 系列芯片）· macOS 26 或更新版本。** 当前不提供 Intel / Windows / Linux 安装包。
 
 1. **先登录 Codex。** 在自己的电脑安装并登录 Codex 应用或 CLI；Codex HUD 使用已有登录状态。
-2. **[打开最新版下载页](https://github.com/WasdTornado/codex-hud-releases/releases/latest)。** 在 Assets 中下载 `Codex-HUD-<版本>-arm64.dmg`。普通使用请选择 **DMG**，无需下载 ZIP 或 Source code。
+2. **[直接下载 v1.1.3 安装包](https://github.com/WasdTornado/codex-hud-releases/releases/download/v1.1.3/Codex-HUD-1.1.3-arm64.dmg)。** 也可通过[官网](https://wasdtornado.github.io/codex-hud-releases/)下载，或前往 [Releases](https://github.com/WasdTornado/codex-hud-releases/releases) 查看全部版本。普通使用请选择 **DMG**，无需下载 ZIP 或 Source code。
 3. **拖入应用程序。** 打开 DMG，将 `Codex HUD.app` 拖入 `Applications`，然后从“应用程序”或 Spotlight 启动。
 
 启动后，桌面会出现额度小球或胶囊，顶部菜单栏会出现额度数字环。首次同步需要稍等片刻。
@@ -129,6 +133,14 @@
 - 小球中的数字表示**剩余百分比**，为节省空间省略 `%`；详情中保留完整百分比。
 - 账号凭据由 Codex 自身管理，不随本项目源码或安装包分发。Codex HUD 不将账号数据上传到本项目。
 - 网络或登录异常时，应用会保留上次成功数据并标记状态；“最近更新”指成功读取的时间。
+
+## 官网与开源
+
+[Codex HUD 官网](https://wasdtornado.github.io/codex-hud-releases/)沿用深色仪表与薄荷绿进度环，支持直接下载安装包。下载后的 GitHub Star 邀请完全自愿，不影响下载与使用。
+
+如果这个小工具帮到了你，欢迎在项目右上角点一颗 **Star**，或通过 [Issues](https://github.com/WasdTornado/codex-hud-releases/issues) 分享建议。
+
+官网源码在 [`Website/`](Website/)，使用 GitHub Pages 托管；[`Website/README.md`](Website/README.md) 记录本地预览、版本维护与发布方式。
 
 ## 从源码构建
 
