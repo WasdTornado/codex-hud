@@ -4,22 +4,24 @@ use tokio::sync::watch;
 fn launch(mode:&str)->Launch {
     Launch {executable:std::env::var_os("HUD_TEST_PYTHON").map(PathBuf::from).unwrap_or_else(||PathBuf::from(if cfg!(windows){"python.exe"}else{"/usr/bin/python3"})),arguments:vec![format!("{}/tests/fake_cli.py",env!("CARGO_MANIFEST_DIR")),mode.into()]}
 }
+// Windows runner 冷启动 Python 可能较慢；这不是生产 CLI 的超时策略。
+fn response_budget()->Duration{Duration::from_secs(if cfg!(windows){10}else{3})}
 fn directory()->PathBuf{std::env::temp_dir().join(format!("codex-hud-fake-{}",std::process::id()))}
 #[tokio::test] async fn protocol_noise_notifications_and_server_requests(){
     let (_tx,rx)=watch::channel(false);
-    let values=client::read(&launch("success"),&directory(),Duration::from_secs(3),rx).await.unwrap();
+    let values=client::read(&launch("success"),&directory(),response_budget(),rx).await.unwrap();
     assert_eq!(values.iter().map(|v|v.remaining).collect::<Vec<_>>(),vec![Some(82.0),Some(47.0)]);
 }
 #[tokio::test] async fn failure_is_sanitized(){
     for (mode,expected) in [("error","登录"),("eof","登录"),("oversize","过长"),("total","过大")] {
         let (_tx,rx)=watch::channel(false);
-        let error=client::read(&launch(mode),&directory(),Duration::from_secs(3),rx).await.unwrap_err();
+        let error=client::read(&launch(mode),&directory(),response_budget(),rx).await.unwrap_err();
         assert!(!error.contains("secret-token"));assert!(error.contains(expected),"{mode}: {error}");
     }
 }
 #[tokio::test] async fn floating_point_ids_match_swift(){
     let (_tx,rx)=watch::channel(false);
-    let values=client::read(&launch("float-id"),&directory(),Duration::from_secs(3),rx).await.unwrap();
+    let values=client::read(&launch("float-id"),&directory(),response_budget(),rx).await.unwrap();
     assert_eq!(values[0].remaining,Some(82.0));
 }
 #[tokio::test] async fn timeout_is_bounded(){

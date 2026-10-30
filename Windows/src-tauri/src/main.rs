@@ -5,6 +5,7 @@ mod platform;
 mod tray;
 mod updates;
 mod preferences;
+mod startup;
 use preferences::Preferences;
 use codex_hud_core::{client,model::QuotaWindow,state::Snapshot};
 use serde::Serialize;
@@ -75,10 +76,9 @@ pub(crate) fn refresh_background(app:AppHandle){tauri::async_runtime::spawn(asyn
 }
 // WebView2 创建期间可能先收到 IPC，此时 setup 尚未注册 Runtime。
 // 前端先订阅 hud-state，再读取快照；未就绪返回 null，setup 的刷新会发布首个状态。
-fn state_snapshot<R:tauri::Runtime>(app:&tauri::AppHandle<R>)->Option<ViewState>{
-    app.try_state::<Runtime>().map(|runtime|runtime.data.lock().unwrap().clone())
+#[tauri::command] fn get_state(app:AppHandle)->Option<ViewState>{
+    startup::snapshot::<_,Runtime,_>(&app,|runtime|runtime.data.lock().unwrap().clone())
 }
-#[tauri::command] fn get_state(app:AppHandle)->Option<ViewState>{state_snapshot(&app)}
 #[tauri::command] fn set_hidden(app:AppHandle,hidden:bool)->Result<(),String>{
     let runtime=app.state::<Runtime>();
     // 先持久化意图；写盘失败时不假装已保存。
@@ -188,9 +188,3 @@ fn application_builder(real:bool)->tauri::Builder<tauri::Wry>{
 }
 #[cfg(not(windows))] fn main(){eprintln!("原生宿主仅在 Windows 运行；Mac 请使用明确标记的网页预览和核心测试。");}
 
-#[cfg(test)] mod lifecycle_tests {
-    #[test] fn early_webview_snapshot_before_setup_does_not_panic(){
-        let app=tauri::test::mock_builder().build(tauri::test::mock_context(tauri::test::noop_assets())).unwrap();
-        assert!(super::state_snapshot(app.handle()).is_none());
-    }
-}
