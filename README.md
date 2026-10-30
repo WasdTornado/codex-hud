@@ -8,12 +8,12 @@
 
 <h1 align="center">Codex HUD</h1>
 <p align="center"><strong>小小一角。心中有数。</strong></p>
-<p align="center">小球常驻桌面，点击查看详情。每 5 小时与每周额度，一眼就知道。</p>
+<p align="center">把 Codex 每 5 小时与每周的剩余额度，放在桌面一角。点击查看重置时间，每 5 分钟自动同步。</p>
 
 <p align="center">
-  <a href="https://wasdtornado.github.io/codex-hud/"><strong>访问官网 ↗</strong></a>
-  &nbsp; · &nbsp;
   <a href="https://github.com/WasdTornado/codex-hud/releases/download/v1.1.3/Codex-HUD-1.1.3-arm64.dmg"><strong>直接下载 v1.1.3 DMG ↓</strong></a>
+  &nbsp; · &nbsp;
+  <a href="https://wasdtornado.github.io/codex-hud/"><strong>访问官网 ↗</strong></a>
   &nbsp; · &nbsp;
   <a href="#下载安装">安装说明</a>
   &nbsp; · &nbsp;
@@ -22,7 +22,7 @@
 
 <p align="center"><sub>macOS 26+ &nbsp; / &nbsp; Apple Silicon &nbsp; / &nbsp; 原生 Swift &nbsp; / &nbsp; MIT 开源</sub></p>
 
-> **先体验，再安装。** [打开官网](https://wasdtornado.github.io/codex-hud/)，试试额度展开、单／双周期和浅深外观。官网与下方设计展示均使用演示数值，实际额度以你的账号为准。
+> 想先看看效果？[体验官网交互演示](https://wasdtornado.github.io/codex-hud/#experience)，试试单／双额度和浅深外观。演示使用示例数值，不读取你的账号。
 
 ## 看一眼，就够了
 
@@ -53,7 +53,7 @@
 **Apple Silicon（M 系列芯片）· macOS 26 或更新版本。**
 
 1. 在电脑上安装并登录 **Codex 应用或 CLI**。
-2. **[下载 v1.1.3 DMG](https://github.com/WasdTornado/codex-hud/releases/download/v1.1.3/Codex-HUD-1.1.3-arm64.dmg)**，打开后将 `Codex HUD.app` 拖入 `Applications`。
+2. **[下载 v1.1.3 DMG](https://github.com/WasdTornado/codex-hud/releases/download/v1.1.3/Codex-HUD-1.1.3-arm64.dmg)**，打开后将 `Codex HUD.app` 拖入“应用程序”（`Applications`）。
 3. 启动应用，等待首次同步。点击桌面小球查看详情，点击菜单栏数字环进行设置。
 
 ### 首次打开被 macOS 拦截？
@@ -68,7 +68,7 @@
 
 显示的是 **Codex 接口返回的剩余额度**，不代表 ChatGPT 所有模型的聊天额度。账号凭据由本机 Codex 管理，不上传到本项目；同步失败时保留上次成功数据并提示状态。
 
-欢迎点一颗 **Star**，或通过 [Issues](https://github.com/WasdTornado/codex-hud/issues) 分享建议。开发与维护请查看 [开发文档](docs/DEVELOPMENT.md)、[发布流程](docs/RELEASING.md)和[官网说明](Website/README.md)。
+用得顺手，欢迎点一颗 **Star**；也可以通过 [Issues](https://github.com/WasdTornado/codex-hud/issues) 分享建议。开发与维护请查看 [开发文档](docs/DEVELOPMENT.md)、[发布流程](docs/RELEASING.md)和[官网说明](Website/README.md)。
 
 ---
 

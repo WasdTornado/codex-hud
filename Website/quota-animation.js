@@ -23,7 +23,7 @@ if (motionPreference.matches) {
   let startedAt;
   const tick = (time) => {
     startedAt ??= time;
-    const elapsed = Math.min((time - startedAt) / 2200, 1);
+    const elapsed = Math.min((time - startedAt) / 1000, 1);
     // 数字、弧长与颜色共用缓动进度，避免三者错位。
     renderQuota(elapsed * elapsed * (3 - 2 * elapsed));
     if (elapsed < 1) animationFrame = requestAnimationFrame(tick);
