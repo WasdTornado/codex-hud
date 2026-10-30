@@ -1,5 +1,24 @@
 # Windows CI 实际状态（2026-10-30）
 
+## 最新测试构建交付
+
+- 成功运行：https://github.com/WasdTornado/codex-hud/actions/runs/41039144452 。代码 SHA `bd1021112bc9b7c1b3da400ac2b3610c4ba5a00b`。
+- Windows MSVC 构建成功；**30/30 测试，0 failed、0 ignored**（核心 6、原生假服务 1、Python 协议 6、Windows 专属 7、托盘/偏好 6、启动竞态 1、离线验签 3）。20 秒演示进程冒烟通过。
+- Artifact：`codex-hud-windows-x64-unsigned-test-41039144452`，ID `12970425423`，8,207,557 字节；https://github.com/WasdTornado/codex-hud/actions/runs/41039144452/artifacts/12970425423 。到期 **2026-11-06 10:18:21 UTC**（7 天）。
+- 只有 EXE、README-TEST-BUILD.txt、RESULTS.txt、SHA256SUMS.txt 四个文件。EXE 22,928,384 字节，实际 Authenticode 状态 NotSigned；不是安装包或 Release，未交互验收。
+- EXE SHA256：`ba374375fd3175f4ac7c2327ae3000ec9244da14b06cb40925a57a925cca139d`。
+- ZIP SHA256：`d74a845c8dadc43d51071f19a6ceea922600522832009062b5b552b5ce98788e`。
+- 已通过 GitHub 下载接口获取 ZIP，并实际下载到 Mac 忽略目录 `.artifacts/delivery/`；独立计算 ZIP、内部 EXE 哈希，与 API digest、CI 日志和包内 SHA256SUMS 一致。未在 Mac 执行 EXE。
+- Artifact 保存使用标准 runner、压缩级别 9、7 天保留和 EXE 100 MB 上限；没有开通收费服务或改计费/权限设置，上传未遇到额度阻塞。
+
+### 本次保存产物时发现并修复的问题
+
+首次保存运行 41035935984（两次尝试）和诊断运行 41037518246 构建/测试通过，但演示启动失败，均未上传产物。诊断捕获到 `get_state` 在 setup 注册 Runtime 前被 WebView2 调用，触发 panic。修复为安全的可选状态读取，已有事件订阅在初始化后补发状态；新增真实 MockRuntime 状态注册前/后回归。旧的 10 秒冒烟偶尔通过不等于没有竞态，本次改为 20 秒。
+
+运行 41038530912 的正常 Python 响应用例遇到测试专用 3 秒启动预算。仅 Windows 正常响应夹具等待改为 10 秒；生产 25 秒策略和专门的超时/取消断言保持不变。最终运行完整通过，没有跳过失败用例。
+
+以下是前一阶段的历史记录；其中“无 artifact”和 29 项测试以本节最新交付为准。真实 Windows 交互、真实账号、磨砂/托盘/DPI、睡眠唤醒与安装更新仍未验收。
+
 本轮用户明确授权向公开 WasdTornado/codex-hud 的独立分支上传 Windows 源码、无账号测试和最小 CI。未授权 main、Release、Pages/macOS/Sparkle、付费 runner 或凭据上传。
 
 ## 已完成

@@ -1,5 +1,7 @@
 # Codex HUD Windows 平台验证预览
 
+最新 [未签名测试构建下载](https://github.com/WasdTornado/codex-hud/actions/runs/41039144452/artifacts/12970425423) 已保存至 2026-11-06 10:18:21 UTC；30 项测试和 20 秒启动冒烟通过，仍未完成交互/真实账号验收。[SHA256 与完整记录](docs/CI-STATUS.md)。
+
 [最新 Windows CI](https://github.com/WasdTornado/codex-hud/actions/runs/41034530956) 已通过：MSVC 宿主构建、29 项无账号测试和演示进程启动冒烟；尚未完成 Windows 实际交互/真实账号验收。详见 [CI 记录](docs/CI-STATUS.md)。此前禁止上传的范围已由用户明确授权本分支源码和 CI 取代；main 与正式发布仍不动。
 
 这是独立的本地开发目录，**不是已验收的 Windows 发行版**。作者 wasdTornado，沿用仓库 [MIT 许可](../LICENSE) 与原图标；现有 Swift 客户端、官网、版本和 Sparkle 配置保持原状。
