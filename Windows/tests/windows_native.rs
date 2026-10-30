@@ -11,7 +11,7 @@ fn native_launch(root:&Path,cmd:bool)->client::Launch{
     std::fs::copy(env!("CARGO_BIN_EXE_hud-fake-cli"),root.join(name)).unwrap();
     if cmd{
         // ASCII 包装器通过自身目录定位原生假服务；空格/Unicode 均来自真实文件路径。
-        std::fs::write(root.join("codex.cmd"),b"@echo off\r\n\"%~dp0fixture.exe\" %*\r\n").unwrap();
+        std::fs::write(root.join("codex.cmd"),b"@echo off\r\necho wrapper-started> wrapper.txt\r\n\"%~dp0fixture.exe\" %* 2> fixture-error.txt\r\n").unwrap();
     }
     let launch=client::discover_in(&[root.to_path_buf()]).unwrap();
     assert_eq!(launch.executable,root.join(if cmd{"codex.cmd"}else{"codex.exe"}));launch
@@ -41,6 +41,7 @@ impl Drop for Process{fn drop(&mut self){unsafe{
 }}}
 
 async fn tree_case(cmd:bool,finish:&str){
+    eprintln!("fixture entry={} finish={finish}",if cmd{"cmd"}else{"exe"});
     let fixture=harness::Fixture::new(if finish=="success"{"success"}else{"timeout"},true,true);
     let launch=native_launch(&fixture.root,cmd);let root=fixture.root.clone();let (tx,rx)=watch::channel(false);
     let started=Instant::now();

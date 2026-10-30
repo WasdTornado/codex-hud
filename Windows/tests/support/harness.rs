@@ -13,7 +13,7 @@ impl Fixture {
             loop{if let Ok(bytes)=std::fs::read(self.root.join("ready.json")){if let Ok(value)=serde_json::from_slice(&bytes){return value;}}
                 tokio::time::sleep(Duration::from_millis(10)).await;
             }
-        }).await.expect("假 CLI 未启动到 ready；不能把未创建孙进程当作清理通过")
+        }).await.unwrap_or_else(|_|panic!("假 CLI 未启动到 ready；wrapper={:?}; fixture error={:?}",std::fs::read_to_string(self.root.join("wrapper.txt")),std::fs::read_to_string(self.root.join("fixture-error.txt"))))
     }
 }
 impl Drop for Fixture{fn drop(&mut self){let _=std::fs::remove_dir_all(&self.root);}}
