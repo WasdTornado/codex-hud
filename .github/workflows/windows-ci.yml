@@ -30,6 +30,9 @@ jobs:
           [Environment]::OSVersion.VersionString
       - name: Windows MSVC build and account-free regressions
         run: ./Windows/scripts/verify-windows.ps1
+      - name: Inspect loader imports on failure
+        if: failure()
+        run: python Windows/scripts/inspect-pe-imports.py
       - name: Demo startup process smoke (not interactive acceptance)
         run: |
           $exe = Join-Path $PWD 'Windows/src-tauri/target/debug/codex-hud-windows.exe'
