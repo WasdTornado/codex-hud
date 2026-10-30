@@ -22,7 +22,6 @@ document.querySelector('#download-help').addEventListener('click', (event) => {
   event.preventDefault();
   downloadDialog.close();
   const help = document.querySelector('#first-open');
-  help.parentElement.open = true;
   help.scrollIntoView({ block: 'start' });
   // 关闭事件先归还触发点焦点，再将焦点移到用户选择的安装帮助。
   requestAnimationFrame(() => help.focus({ preventScroll: true }));
