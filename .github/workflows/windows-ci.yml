@@ -29,7 +29,8 @@ jobs:
           python --version
           [Environment]::OSVersion.VersionString
       - name: Windows MSVC build and account-free regressions
-        run: ./Windows/scripts/verify-windows.ps1
+        run: |
+          ./Windows/scripts/verify-windows.ps1 *>&1 | Tee-Object -FilePath (Join-Path $env:RUNNER_TEMP 'windows-validation.log')
       - name: Inspect loader imports on failure
         if: failure()
         run: python Windows/scripts/inspect-pe-imports.py
@@ -43,3 +44,40 @@ jobs:
           } finally {
             if (-not $process.HasExited) { Stop-Process -Id $process.Id }
           }
+      - name: Prepare unsigned test build and checksums
+        run: |
+          $directory = Join-Path $env:RUNNER_TEMP 'codex-hud-test-build'
+          New-Item -ItemType Directory -Path $directory | Out-Null
+          $exe = Join-Path $PWD 'Windows/src-tauri/target/debug/codex-hud-windows.exe'
+          if ((Get-Item $exe).Length -gt 100MB) { throw 'Test EXE exceeds the small artifact limit' }
+          $signature = (Get-AuthenticodeSignature $exe).Status.ToString()
+          if ($signature -ne 'NotSigned') { throw "Unexpected signing status: $signature" }
+          Copy-Item $exe $directory
+          $lines = @(Get-Content (Join-Path $env:RUNNER_TEMP 'windows-validation.log') | Where-Object { $_ -match 'test result: ok\. (\d+) passed; 0 failed; 0 ignored;' })
+          $passed = 0
+          foreach ($line in $lines) { if ($line -match 'test result: ok\. (\d+) passed;') { $passed += [int]$Matches[1] } }
+          if ($passed -ne 29) { throw "Expected 29 successful tests, observed $passed" }
+          $hash = (Get-FileHash $exe -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  codex-hud-windows.exe" | Set-Content (Join-Path $directory 'SHA256SUMS.txt') -Encoding utf8
+          @(
+            'UNSIGNED TEST BUILD - NOT A RELEASE OR INSTALLER'
+            'Windows interaction and real-account acceptance have NOT been completed.'
+            'Requires an existing WebView2 Runtime. Default launch uses labeled demo data.'
+            'No credentials or real quota data are included. No installation is performed.'
+            'Update signing and Windows Authenticode are separate; this EXE is NotSigned.'
+            "Commit: $env:GITHUB_SHA"
+            "Run: https://github.com/$env:GITHUB_REPOSITORY/actions/runs/$env:GITHUB_RUN_ID"
+            'Target: x86_64-pc-windows-msvc; Rust 1.99.1; debug test build'
+          ) | Set-Content (Join-Path $directory 'README-TEST-BUILD.txt') -Encoding utf8
+          (@("Tests: $passed passed; 0 failed; 0 ignored", 'Windows-specific collection: 7', 'Demo process smoke: survived 10 seconds; interaction NOT verified') + $lines) | Set-Content (Join-Path $directory 'RESULTS.txt') -Encoding utf8
+          Write-Output "EXE SHA256: $hash"
+          Write-Output "EXE bytes: $((Get-Item $exe).Length)"
+      - name: Save unsigned test build for seven days
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: codex-hud-windows-x64-unsigned-test-${{ github.run_id }}
+          path: ${{ runner.temp }}/codex-hud-test-build/
+          retention-days: 7
+          compression-level: 9
+          if-no-files-found: error
+          include-hidden-files: false
