@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "local-hud",
+  "description": "仅本地内嵌界面可订阅状态；不向网页开放 shell、文件或更新安装权限。",
+  "windows": ["orb", "details"],
+  "permissions": ["core:event:allow-listen", "core:event:allow-unlisten"]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "codex-hud-windows-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {"test": "node --test tests/ui.test.mjs", "preview": "python3 scripts/preview.py"}
+}

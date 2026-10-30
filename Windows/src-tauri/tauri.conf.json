@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Codex HUD Windows Preview",
+  "version": "0.1.0",
+  "identifier": "com.wasdtornado.codexhud.windows.preview",
+  "build": { "frontendDist": "../ui" },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      { "label": "orb", "title": "Codex HUD · 平台验证预览", "url": "index.html", "width": 36, "height": 36, "visible": false, "decorations": false, "transparent": true, "shadow": false, "alwaysOnTop": true, "skipTaskbar": true, "resizable": false, "maximizable": false, "minimizable": false, "backgroundColor": "#00000000" },
+      { "label": "details", "title": "Codex HUD · 额度详情", "url": "index.html?view=details", "width": 192, "height": 180, "visible": false, "decorations": false, "transparent": true, "shadow": false, "alwaysOnTop": true, "skipTaskbar": true, "resizable": false, "backgroundColor": "#00000000" }
+    ],
+    "security": { "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' asset:; connect-src ipc: http://ipc.localhost; object-src 'none'; base-uri 'none'; frame-src 'none'" }
+  },
+  "bundle": { "active": false, "publisher": "wasdTornado", "copyright": "MIT · wasdTornado", "icon": ["icons/icon.ico", "icons/icon.png"] },
+  "plugins": { "updater": { "pubkey": "", "endpoints": [], "requireSignedVersion": true } }
+}

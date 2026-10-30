@@ -1,0 +1,42 @@
+name: Windows candidate validation
+on:
+  push:
+    branches: [windows-ci-20261030]
+    paths: ['Windows/**', '.github/workflows/windows-ci.yml']
+permissions:
+  contents: read
+concurrency:
+  group: windows-candidate-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  windows:
+    runs-on: windows-2022
+    timeout-minutes: 40
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Toolchain and environment
+        run: |
+          rustup toolchain install 1.99.1 --profile minimal
+          if ($LASTEXITCODE -ne 0) { throw 'Rust toolchain unavailable' }
+          rustup default 1.99.1
+          rustc -Vv
+          cargo -V
+          python --version
+          [Environment]::OSVersion.VersionString
+      - name: Windows MSVC build and account-free regressions
+        run: ./Windows/scripts/verify-windows.ps1
+      - name: Demo startup process smoke (not interactive acceptance)
+        run: |
+          $exe = Join-Path $PWD 'Windows/src-tauri/target/debug/codex-hud-windows.exe'
+          $process = Start-Process -FilePath $exe -PassThru
+          try {
+            if ($process.WaitForExit(10000)) { throw "Demo exited early: $($process.ExitCode)" }
+            Write-Output 'Demo process remained running for 10 seconds; appearance and interaction NOT verified.'
+          } finally {
+            if (-not $process.HasExited) { Stop-Process -Id $process.Id }
+          }
