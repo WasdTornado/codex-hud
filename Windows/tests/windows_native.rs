@@ -17,7 +17,7 @@ fn native_launch(root:&Path,cmd:bool)->client::Launch{
         eprintln!("cmd fixture path={}",root.display());
         // 只探测固定 echo，捕获 cmd 对测试路径/引号的诊断；不调用真实 CLI。
         use std::os::windows::process::CommandExt;
-        let mut probe=std::process::Command::new(std::path::PathBuf::from(std::env::var_os("SystemRoot").unwrap()).join("System32/cmd.exe"));
+        let mut probe=std::process::Command::new(std::path::PathBuf::from(std::env::var_os("SystemRoot").unwrap()).join("System32").join("cmd.exe"));
         let output=probe.args(["/d","/v:off","/s","/c"]).raw_arg(format!("\"\"{}\"\"",root.join("probe.cmd").display()));
         std::fs::write(root.join("probe.cmd"),b"@echo probe-ok\r\n").unwrap();
         let output=output.output().unwrap();

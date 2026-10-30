@@ -50,7 +50,7 @@ fn command(launch: &Launch) -> Result<Command,String> {
         // Launch 同时用于无账号测试，不能只信任调用者曾执行 native_launch。
         native_launch(&launch.executable)?;
         if launch.arguments!=["app-server","--listen","stdio://"] {return Err(".cmd 入口只接受固定额度读取参数".into());}
-        let interpreter=std::env::var_os("SystemRoot").map(PathBuf::from).ok_or("无法定位系统命令解释器")?.join("System32/cmd.exe");
+        let interpreter=std::env::var_os("SystemRoot").map(PathBuf::from).ok_or("无法定位系统命令解释器")?.join("System32").join("cmd.exe");
         if !interpreter.is_absolute()||!interpreter.is_file(){return Err("系统命令解释器路径无效".into());}
         let mut c=Command::new(interpreter);
         // 禁用 AutoRun 和延迟展开；固定参数不能来自前端任意输入。
