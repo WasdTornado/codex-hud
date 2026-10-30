@@ -42,12 +42,12 @@ jobs:
           $stdout = Join-Path $env:RUNNER_TEMP 'hud-demo-stdout.txt'
           $process = Start-Process -FilePath $exe -PassThru -RedirectStandardError $stderr -RedirectStandardOutput $stdout
           try {
-            if ($process.WaitForExit(10000)) {
+            if ($process.WaitForExit(20000)) {
               Get-Content $stderr
               Get-Content $stdout
               throw "Demo exited early: $($process.ExitCode)"
             }
-            Write-Output 'Demo process remained running for 10 seconds; appearance and interaction NOT verified.'
+            Write-Output 'Demo process remained running for 20 seconds; appearance and interaction NOT verified.'
           } finally {
             if (-not $process.HasExited) { Stop-Process -Id $process.Id }
           }
@@ -63,7 +63,7 @@ jobs:
           $lines = @(Get-Content (Join-Path $env:RUNNER_TEMP 'windows-validation.log') | Where-Object { $_ -match 'test result: ok\. (\d+) passed; 0 failed; 0 ignored;' })
           $passed = 0
           foreach ($line in $lines) { if ($line -match 'test result: ok\. (\d+) passed;') { $passed += [int]$Matches[1] } }
-          if ($passed -ne 29) { throw "Expected 29 successful tests, observed $passed" }
+          if ($passed -ne 30) { throw "Expected 30 successful tests, observed $passed" }
           $hash = (Get-FileHash $exe -Algorithm SHA256).Hash.ToLowerInvariant()
           "$hash  codex-hud-windows.exe" | Set-Content (Join-Path $directory 'SHA256SUMS.txt') -Encoding utf8
           @(
@@ -76,7 +76,7 @@ jobs:
             "Run: https://github.com/$env:GITHUB_REPOSITORY/actions/runs/$env:GITHUB_RUN_ID"
             'Target: x86_64-pc-windows-msvc; Rust 1.99.1; debug test build'
           ) | Set-Content (Join-Path $directory 'README-TEST-BUILD.txt') -Encoding utf8
-          (@("Tests: $passed passed; 0 failed; 0 ignored", 'Windows-specific collection: 7', 'Demo process smoke: survived 10 seconds; interaction NOT verified') + $lines) | Set-Content (Join-Path $directory 'RESULTS.txt') -Encoding utf8
+          (@("Tests: $passed passed; 0 failed; 0 ignored", 'Windows-specific collection: 7', 'Demo process smoke: survived 20 seconds; interaction NOT verified') + $lines) | Set-Content (Join-Path $directory 'RESULTS.txt') -Encoding utf8
           Write-Output "EXE SHA256: $hash"
           Write-Output "EXE bytes: $((Get-Item $exe).Length)"
       - name: Save unsigned test build for seven days
