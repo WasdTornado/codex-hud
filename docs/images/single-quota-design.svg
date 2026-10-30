@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="480" viewBox="0 0 1200 480" role="img" aria-labelledby="title desc">
+<title id="title">留在一角，一眼有数。</title>
+<desc id="desc">单额度小球，点击展开额度、重置时间与同步状态。设计示意，82 与 47 为演示数值。</desc>
+<defs>
+<radialGradient id="ambient"><stop stop-color="#2e593e" stop-opacity=".48"/><stop offset="1" stop-color="#0e1411" stop-opacity="0"/></radialGradient>
+<linearGradient id="glass" x2=".8" y2="1"><stop stop-color="#f4faf6" stop-opacity=".97"/><stop offset="1" stop-color="#d7e5db" stop-opacity=".94"/></linearGradient>
+</defs>
+<rect width="1200" height="480" rx="20" fill="#0e1411"/>
+<ellipse cx="665" cy="275" rx="490" ry="260" fill="url(#ambient)"/>
+<g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Microsoft YaHei,sans-serif">
+<text x="48" y="46" font-size="12" letter-spacing="2" fill="#9aafa1">01 / SINGLE QUOTA</text>
+<text x="48" y="87" font-size="28" font-weight="600" fill="#e6eee8">留在一角，一眼有数。</text>
+<text x="1152" y="46" font-size="12" text-anchor="end" fill="#82968a">CODEX HUD / 设计示意</text>
+<path d="M370 256h76m-7-6 7 6-7 6" fill="none" stroke="#617d6a" stroke-width="1.5" stroke-linecap="round"/>
+<text x="408" y="285" text-anchor="middle" font-size="13" fill="#9aafa1">点击展开</text>
+<rect x="504" y="142" width="620" height="226" rx="32" fill="url(#glass)" stroke="#ffffff" stroke-opacity=".7"/>
+<text x="538" y="187" font-size="21" font-weight="600" fill="#21352a">剩余额度</text>
+<circle cx="256" cy="256" r="59" fill="url(#glass)" stroke="#f4faf6" stroke-opacity=".65"/>
+<circle cx="256" cy="256" r="53" fill="none" stroke="#c9d8ce" stroke-width="4"/>
+<circle cx="256" cy="256" r="53" fill="none" stroke="#4bbd75" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="82 100" transform="rotate(-90 256 256)"/>
+<text x="256" y="272" text-anchor="middle" font-size="44" font-weight="600" fill="#21352a">82</text>
+<circle cx="256" cy="293" r="3.5" fill="#4bbd75"/>
+<text x="538" y="227" font-size="19" font-weight="500" fill="#21352a">每周</text>
+<text x="1090" y="227" text-anchor="end" font-size="25" font-weight="600" fill="#21352a">82%</text>
+<rect x="538" y="242" width="552" height="5" rx="2.5" fill="#c9d8ce"/>
+<rect x="538" y="242" width="452.64" height="5" rx="2.5" fill="#4bbd75"/>
+<text x="538" y="273" font-size="16" fill="#62766a">周日 09:31 重置</text>
+<circle cx="543" cy="335" r="4" fill="#4bbd75"/>
+<text x="558" y="341" font-size="16" fill="#62766a">刚刚更新</text>
+<path d="M1089 330a10 10 0 1 0 3 8m-3-8h-7m7 0v-7" fill="none" stroke="#62766a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="256" y="416" text-anchor="middle" font-size="15" fill="#a1b3a7">只有一个周期，就显示小球</text>
+<line x1="48" y1="438" x2="1152" y2="438" stroke="#2b3c31"/>
+<text x="48" y="462" font-size="12" fill="#8da193">单额度 · 36 × 36 pt</text>
+<text x="1152" y="462" text-anchor="end" font-size="12" fill="#8da193">放大展示 / 数值仅作演示</text>
+</g></svg>

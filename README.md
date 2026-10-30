@@ -22,141 +22,54 @@
 
 <p align="center"><sub>macOS 26+ &nbsp; / &nbsp; Apple Silicon &nbsp; / &nbsp; 原生 Swift &nbsp; / &nbsp; MIT 开源</sub></p>
 
-> **先体验，再安装。** [打开官网](https://wasdtornado.github.io/codex-hud-releases/)，试试额度展开、单／双周期和浅深外观。官网里的数值是交互示例；下方展示应用的实际运行效果。
+> **先体验，再安装。** [打开官网](https://wasdtornado.github.io/codex-hud-releases/)，试试额度展开、单／双周期和浅深外观。官网与下方设计展示均使用演示数值，实际额度以你的账号为准。
 
 ## 看一眼，就够了
 
-<table>
-  <tr>
-    <th align="center" width="25%">平时，只留一个小球</th>
-    <th align="center" width="75%">点击，查看额度与重置时间</th>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/images/weekly-orb.png" width="104" alt="实际运行的额度小球，环内显示剩余额度 82"></td>
-    <td align="center"><img src="docs/images/weekly-details.png" width="416" alt="点击后展开每周剩余额度、重置时间和最近更新时间"></td>
-  </tr>
-</table>
+### 单额度 · 留在一角，一眼有数
 
-以上为 **1.1.2 实际运行截图**，数值是拍摄时的账号状态。小球本体仅 **36 × 36 pt**；截图以 Retina 像素展示，含窗口透明边距。
+<img src="docs/images/single-quota-design.svg" width="100%" alt="单额度设计示意：桌面小球显示 82，点击展开每周剩余额度、重置时间和更新状态。">
 
-<details>
-<summary><strong>同时有 5h 和周额度？查看竖版胶囊与深色外观</strong></summary>
+只有一种额度时，显示 **36 × 36 pt** 的小球。点击展开详情，查看剩余百分比、重置时间和同步状态。
 
-<br>
+### 双额度 · 5h 在上，周在下
 
-<table>
-  <tr>
-    <th align="center" width="25%">5h 在上，周在下</th>
-    <th align="center" width="75%">详情中同时查看两个周期</th>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/images/dual-capsule-demo.png" width="104" alt="深色双额度竖版胶囊，上方 5h、下方周，各有独立外缘进度"></td>
-    <td align="center"><img src="docs/images/dual-details-demo.png" width="416" alt="深色双额度详情，显示两个周期的剩余量和重置时间"></td>
-  </tr>
-</table>
+<img src="docs/images/dual-quota-design.svg" width="100%" alt="双额度设计示意：竖版胶囊上方显示 5h 82，下方显示每周 47；点击详情同时查看两个周期。">
 
-这组图片来自独立原生预览，**82 / 87 为演示数据**。正式应用按接口实际返回的周期自动选择小球或胶囊，双额度胶囊本体为 **36 × 72 pt**。
+同时有每 5 小时和每周额度时，自动显示 **36 × 72 pt** 的竖版胶囊。两个周期各有独立的外缘进度，点击即可同时查看详情。
 
-</details>
+<sub>以上为与官网风格一致的设计示意，已放大展示；82 / 47 为演示数值，并非实时用量。应用按账号实际返回的周期自动选择小球或胶囊，外观跟随系统切换。</sub>
 
 ## 它能做什么
 
-| 功能 | 使用体验 |
-| --- | --- |
-| 自动识别额度周期 | 只有一种额度时显示小球；同时有 5h 和周额度时显示竖版胶囊 |
-| 桌面随时可见 | 置顶悬浮，拖动调整位置，也可从菜单靠左或靠右停靠 |
-| 桌面浮窗开关（1.1.3 起） | 在菜单栏勾选“显示桌面悬浮窗”，自主显示或隐藏小球 / 胶囊；重启后保留选择 |
-| 详情按需展开 | 点击查看剩余百分比、重置时间、同步状态；点击外部或按 Esc 收起 |
-| 菜单栏数字环 | 圆环内直接显示剩余额度；双周期时优先显示 5h |
-| 跟随系统外观 | 浅色使用原生磨砂，深色使用不透明石墨色 |
-| 同步状态清晰 | 每 5 分钟刷新额度；失败时保留上次成功数据，并提示状态 |
-| 应用内更新 | 发现新版本时提示，由你确认下载和安装 |
-
-应用以菜单栏工具运行，**不占 Dock**。额度读取通过本机 Codex CLI 完成，不依赖 Electron、Node 或 npm。
+- **额度随时可见**：自动识别单／双周期，菜单栏数字环同步显示余量。
+- **小巧不打扰**：置顶悬浮、自由拖动、左右停靠，也可从菜单栏隐藏桌面浮窗。
+- **点击看详情**：查看剩余百分比、重置时间和同步状态。
+- **跟随系统外观**：浅色磨砂，深色石墨；以菜单栏工具运行，不占 Dock。
+- **自动刷新与更新**：额度每 5 分钟同步，支持应用内检查和安装新版本。
 
 ## 下载安装
 
-**运行要求：Apple Silicon（M 系列芯片）· macOS 26 或更新版本。** 当前不提供 Intel / Windows / Linux 安装包。
+**Apple Silicon（M 系列芯片）· macOS 26 或更新版本。**
 
-1. **先登录 Codex。** 在自己的电脑安装并登录 Codex 应用或 CLI；Codex HUD 使用已有登录状态。
-2. **[直接下载 v1.1.3 安装包](https://github.com/WasdTornado/codex-hud-releases/releases/download/v1.1.3/Codex-HUD-1.1.3-arm64.dmg)。** 也可通过[官网](https://wasdtornado.github.io/codex-hud-releases/)下载，或前往 [Releases](https://github.com/WasdTornado/codex-hud-releases/releases) 查看全部版本。普通使用请选择 **DMG**，无需下载 ZIP 或 Source code。
-3. **拖入应用程序。** 打开 DMG，将 `Codex HUD.app` 拖入 `Applications`，然后从“应用程序”或 Spotlight 启动。
+1. 在电脑上安装并登录 **Codex 应用或 CLI**。
+2. **[下载 v1.1.3 DMG](https://github.com/WasdTornado/codex-hud-releases/releases/download/v1.1.3/Codex-HUD-1.1.3-arm64.dmg)**，打开后将 `Codex HUD.app` 拖入 `Applications`。
+3. 启动应用，等待首次同步。点击桌面小球查看详情，点击菜单栏数字环进行设置。
 
-启动后，桌面会出现额度小球或胶囊，顶部菜单栏会出现额度数字环。首次同步需要稍等片刻。
+### 首次打开被 macOS 拦截？
 
-<details>
-<summary><strong>首次打开被 macOS 拦截？</strong></summary>
-
-当前分发包使用临时签名，**尚未进行 Apple Developer ID 签名和公证**。请先确认下载自本仓库，并核对 Release 中的 SHA256 校验文件。
-
-确认来源可信且文件未被篡改后，按 [Apple 官方说明](https://support.apple.com/zh-cn/102445)处理：尝试打开应用后，在“系统设置 → 隐私与安全性”中查看是否有“仍要打开”入口。企业管理的 Mac 可能需要联系管理员。
-
-如果系统报告应用损坏或包含恶意内容，请停止打开并提交 [Issue](https://github.com/WasdTornado/codex-hud-releases/issues)。
-
-</details>
-
-## 日常使用
-
-| 操作 | 结果 |
-| --- | --- |
-| 点击小球 / 胶囊 | 展开或收起详情 |
-| 拖动小球 / 胶囊 | 调整桌面位置，位置自动保存 |
-| 点击菜单栏数字环 | 刷新额度、停靠、检查更新、查看关于或退出 |
-| 勾选 / 取消“显示桌面悬浮窗”（1.1.3 起） | 显示 / 隐藏桌面小球或胶囊；隐藏后菜单栏继续显示额度，详情同时收起 |
-| 点击详情中的刷新按钮 | 立即重新读取额度 |
-| 点击外部或按 Esc | 收起详情 |
-
-快捷键：`⌘R` 刷新、`⌘I` 详情、`⌘[` 靠左、`⌘]` 靠右、`⌘Q` 退出。快捷键在应用获得键盘焦点时生效。当前设置入口集中在菜单栏，暂无独立设置页面。
-
-隐藏桌面浮窗后，详情与左右停靠入口会暂时禁用；重新勾选即可在原位置恢复。该开关从 **1.1.3** 起提供，可通过[应用内更新](#应用更新)或 [Releases](https://github.com/WasdTornado/codex-hud-releases/releases/latest) 获取。
+当前安装包**尚未经过 Apple Developer ID 签名和公证**。确认下载自本仓库并核对 Release 中的 SHA256 后，可按 [Apple 官方说明](https://support.apple.com/zh-cn/102445)，在“系统设置 → 隐私与安全性”中查看“仍要打开”入口。若提示应用损坏或含恶意内容，请停止打开并[反馈问题](https://github.com/WasdTornado/codex-hud-releases/issues)。
 
 ## 应用更新
 
-**已经安装 1.1.0 或更新版本：**
+点击 **菜单栏数字环 → 检查更新…**，按提示下载安装。启用自动检查后，每 **6 小时**检查新版本，安装前会征求确认。1.0.5 及更早版本需先手动安装一次新版。
 
-1. 点击顶部菜单栏的 Codex HUD 数字环。
-2. 选择“检查更新…”；发现新版后，菜单也会显示更新入口。
-3. 按更新窗口提示下载并安装，应用会验证更新包签名并重启。
+## 关于项目
 
-启用“自动检查更新”后，应用每 **6 小时**后台检查一次，发现新版时显示提示；不会未经确认自动安装。也可以随时手动检查，无需让同事重新传安装包。
+显示的是 **Codex 接口返回的剩余额度**，不代表 ChatGPT 所有模型的聊天额度。账号凭据由本机 Codex 管理，不上传到本项目；同步失败时保留上次成功数据并提示状态。
 
-**1.0.5 及更早版本：** 先从 [Releases](https://github.com/WasdTornado/codex-hud-releases/releases/latest) 手动安装一次新版，此后即可使用应用内更新。
-
-| 刷新项目 | 频率 |
-| --- | --- |
-| 额度数据 | 每 5 分钟；启动、唤醒和手动刷新时立即请求 |
-| 应用版本 | 自动检查开启时每 6 小时，也可手动检查 |
-
-## 额度与隐私
-
-- 这里显示的是 **Codex 接口返回的额度**，不代表 ChatGPT 所有模型的聊天额度；具体周期取决于账号实际返回的数据。
-- 小球中的数字表示**剩余百分比**，为节省空间省略 `%`；详情中保留完整百分比。
-- 账号凭据由 Codex 自身管理，不随本项目源码或安装包分发。Codex HUD 不将账号数据上传到本项目。
-- 网络或登录异常时，应用会保留上次成功数据并标记状态；“最近更新”指成功读取的时间。
-
-## 官网与开源
-
-[Codex HUD 官网](https://wasdtornado.github.io/codex-hud-releases/)沿用深色仪表与薄荷绿进度环，支持直接下载安装包。下载后的 GitHub Star 邀请完全自愿，不影响下载与使用。
-
-如果这个小工具帮到了你，欢迎在项目右上角点一颗 **Star**，或通过 [Issues](https://github.com/WasdTornado/codex-hud-releases/issues) 分享建议。
-
-官网源码在 [`Website/`](Website/)，使用 GitHub Pages 托管；[`Website/README.md`](Website/README.md) 记录本地预览、版本维护与发布方式。
-
-## 从源码构建
-
-需要 Xcode（默认路径 `/Applications/Xcode.app`，SDK 支持 macOS 26）和 Python 3：
-
-```sh
-git clone https://github.com/WasdTornado/codex-hud-releases.git
-cd codex-hud-releases
-python3 scripts/test.py
-python3 scripts/build.py
-```
-
-产物为 `build/Codex HUD.app`。构建脚本自动下载并校验固定版本的 Sparkle，图标由 Xcode actool 编译。更多结构、预览与贡献说明见 [开发文档](docs/DEVELOPMENT.md)。
-
-源码在 **main** 维护，Releases Assets 仅提供安装与在线更新所需文件。GitHub 自动生成的 Source code 是标签归档；历史 v1.1.0 / v1.1.2 标签早于源码导入，完整源码请查看 main。维护与发布步骤见 [发布流程](docs/RELEASING.md)。
+欢迎点一颗 **Star**，或通过 [Issues](https://github.com/WasdTornado/codex-hud-releases/issues) 分享建议。开发与维护请查看 [开发文档](docs/DEVELOPMENT.md)、[发布流程](docs/RELEASING.md)和[官网说明](Website/README.md)。
 
 ---
 
-由 **wasdTornado** 维护，采用 [MIT License](LICENSE)。第三方版权与条款见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。Codex HUD 是独立社区工具，与 OpenAI 无隶属或官方背书关系。
+由 **wasdTornado** 维护 · [MIT License](LICENSE) · [第三方声明](THIRD_PARTY_NOTICES.md)。独立社区工具，非 OpenAI 官方应用。
