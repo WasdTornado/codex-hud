@@ -23,7 +23,9 @@ while queue:
         raise ValueError('Unmapped RVA')
     def string(rva):
         start=offset(rva);return data[start:data.index(b'\0',start)]
-    desc=offset(struct.unpack_from('<I',data,optional+120)[0]);missing=[]
+    import_rva=struct.unpack_from('<I',data,optional+120)[0]
+    if not import_rva:continue
+    desc=offset(import_rva);missing=[]
     while True:
         original,stamp,chain,name,first=struct.unpack_from('<IIIII',data,desc);desc+=20
         if not name:break
