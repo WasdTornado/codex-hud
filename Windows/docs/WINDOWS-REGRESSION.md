@@ -1,6 +1,6 @@
 # Windows 无账号回归执行说明
 
-状态：**测试代码和脚本已准备，Windows 全部未执行**。Mac 编译假服务或运行平台无关测试，不算下面任何 Windows 用例通过。脚本不安装工具、不调整执行策略、不触发 CI、不上传结果，不需要 Codex CLI 或账号。
+状态：标准 Windows Server 2022 runner 已实际执行本套自动回归，**Windows 专属 7/7 通过、0 ignored**；详情见 [CI-STATUS.md](CI-STATUS.md)。hidden intent 人工交互记录仍未执行。Mac 编译或模拟不能替代 Windows 证据。脚本不安装工具、不调整执行策略、不触发 CI、不上传结果，不需要 Codex CLI 或账号。
 
 ## 最小环境
 
@@ -26,13 +26,13 @@
 
 | 测试名后缀（共同前缀 windows_） | 覆盖 | 通过判定 | 当前结果 |
 |---|---|---|---|
-| exe_cmd_success_noise_and_tree_cleanup | exe/cmd、空格/Unicode 路径、浮点与乱序 ID、字符串/布尔 ID、通知、噪声、服务器请求拒绝 | 固定 82/47 且排序正确；parent/child 两个已打开进程句柄均 signaled | 未执行 |
-| exe_cmd_timeout_tree_cleanup | exe/cmd 假服务挂起与孙进程 | 返回超时，且两个句柄确认退出；测试用 8 秒截止，不声称测了默认 25 秒 SLA | 未执行 |
-| exe_cmd_cancellation_tree_cleanup | 假服务与孙进程启动后取消 | 返回取消且两进程退出 | 未执行 |
-| exe_cmd_aborted_future_tree_cleanup | 丢弃读取 future，Job Drop 兜底 | JoinHandle 确认取消且两进程退出 | 未执行 |
-| exe_cmd_precancel_never_spawns | 请求开始前已有取消意图 | 返回取消、ready.json 未生成 | 未执行 |
-| exe_cmd_errors_and_output_limits | exe/cmd 错误、EOF、单行 1 MiB、累计 >4 MiB | 明确错误类别，且不泄漏固定 secret-token 文本；不得变成超时蒙混通过 | 未执行 |
-| cmd_metacharacters_are_rejected_without_execution | cmd 文件名 & / % / ! / ^ | 现有绝对路径也被拒绝，未运行假 CLI | 未执行 |
+| exe_cmd_success_noise_and_tree_cleanup | exe/cmd、空格/Unicode 路径、浮点与乱序 ID、字符串/布尔 ID、通知、噪声、服务器请求拒绝 | 固定 82/47 且排序正确；parent/child 两个已打开进程句柄均 signaled | CI 通过；交互未验收 |
+| exe_cmd_timeout_tree_cleanup | exe/cmd 假服务挂起与孙进程 | 返回超时，且两个句柄确认退出；测试用 8 秒截止，不声称测了默认 25 秒 SLA | CI 通过；交互未验收 |
+| exe_cmd_cancellation_tree_cleanup | 假服务与孙进程启动后取消 | 返回取消且两进程退出 | CI 通过；交互未验收 |
+| exe_cmd_aborted_future_tree_cleanup | 丢弃读取 future，Job Drop 兜底 | JoinHandle 确认取消且两进程退出 | CI 通过；交互未验收 |
+| exe_cmd_precancel_never_spawns | 请求开始前已有取消意图 | 返回取消、ready.json 未生成 | CI 通过；交互未验收 |
+| exe_cmd_errors_and_output_limits | exe/cmd 错误、EOF、单行 1 MiB、累计 >4 MiB | 明确错误类别，且不泄漏固定 secret-token 文本；不得变成超时蒙混通过 | CI 通过；交互未验收 |
+| cmd_metacharacters_are_rejected_without_execution | cmd 文件名 & / % / ! / ^ | 现有绝对路径也被拒绝，未运行假 CLI | CI 通过；交互未验收 |
 
 进程树测试先等待 fake CLI 报告父/孙 PID，再打开进程对象句柄，最后放行协议，避免成功进程太快退出或 PID 重用造成误判。只查询这些测试句柄。断言失败后的 TerminateProcess 是测试环境清理，不算产品清理通过；不使用进程名批量终止、不杀真实 Codex。测试异常时 ReadTask Drop 取消读取。若 Job 绑定失败，测试必须失败，不能跳过。
 

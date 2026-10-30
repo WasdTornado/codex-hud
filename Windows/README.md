@@ -1,5 +1,7 @@
 # Codex HUD Windows 平台验证预览
 
+[最新 Windows CI](https://github.com/WasdTornado/codex-hud/actions/runs/41034530956) 已通过：MSVC 宿主构建、29 项无账号测试和演示进程启动冒烟；尚未完成 Windows 实际交互/真实账号验收。详见 [CI 记录](docs/CI-STATUS.md)。此前禁止上传的范围已由用户明确授权本分支源码和 CI 取代；main 与正式发布仍不动。
+
 这是独立的本地开发目录，**不是已验收的 Windows 发行版**。作者 wasdTornado，沿用仓库 [MIT 许可](../LICENSE) 与原图标；现有 Swift 客户端、官网、版本和 Sparkle 配置保持原状。
 
 ## 当前路线与关卡
@@ -33,7 +35,7 @@ sh Windows/scripts/cargo-local.sh test --locked --manifest-path Windows/src-taur
 
 Windows 专属无账号回归脚本与 7 项判定见 [执行说明](docs/WINDOWS-REGRESSION.md)。可在 Mac 额外使用 `--features test-fixtures` 测试共用 Rust 假服务；其通过不能替代 Windows 专属用例。
 
-## Windows 本地构建与运行（未执行）
+## Windows 构建与运行（CI 已通过，交互未验收）
 
 建议先以 Windows 11 x64 验证；Windows 10、Windows ARM64 不在已验证支持矩阵内。需要现有 Rust MSVC、Visual Studio C++ Build Tools、WebView2。脚本不安装工具、不改执行策略、不跑远端 CI：
 

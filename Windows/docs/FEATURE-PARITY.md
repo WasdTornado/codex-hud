@@ -1,5 +1,9 @@
 # 交接功能对应核对
 
+最新结果（2026-10-30）：[Windows CI 41034530956](https://github.com/WasdTornado/codex-hud/actions/runs/41034530956) **成功**，代码提交 `c6702ec84148f96faf575c984f7c46324c15ea2c`。`x86_64-pc-windows-msvc` 宿主构建、29/29 无账号测试（Windows 专属 7/7、0 ignored）和 10 秒演示进程冒烟通过。真实交互与账号验收未执行。完整层次及历史失败修复见 [CI-STATUS.md](CI-STATUS.md)。
+
+以下保留 CI 前本地阶段的历史核对，涉及“Windows 未执行/未编译”的旧描述以以上结果为准；交互、磨砂、托盘、DPI、真实睡眠和安装验收仍未通过。
+
 2026-10-30，当前最终源码。这里的“已实现”仅指存在真实宿主调用链，**不代表已通过 Windows 编译或交互验收**。Tauri + Win32 仍为待平台关卡验证的候选路线。验证层次与命令见 [VALIDATION.md](VALIDATION.md)。
 
 ## 已实现、待 Windows 验证

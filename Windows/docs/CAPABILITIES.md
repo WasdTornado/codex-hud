@@ -1,5 +1,9 @@
 # Windows 能力矩阵
 
+最新结果（2026-10-30）：[Windows CI 41034530956](https://github.com/WasdTornado/codex-hud/actions/runs/41034530956) **成功**，代码提交 `c6702ec84148f96faf575c984f7c46324c15ea2c`。`x86_64-pc-windows-msvc` 宿主构建、29/29 无账号测试（Windows 专属 7/7、0 ignored）和 10 秒演示进程冒烟通过。真实交互与账号验收未执行。完整层次及历史失败修复见 [CI-STATUS.md](CI-STATUS.md)。
+
+以下保留 CI 前本地阶段的历史核对，涉及“Windows 未执行/未编译”的旧描述以以上结果为准；交互、磨砂、托盘、DPI、真实睡眠和安装验收仍未通过。
+
 2026-10-30（已补充 Rust 编译阶段），本机 macOS，仓库基线 `18c8b34f200697c0cd7bfa7f8dfafdbcad486b8a`。仅本地开发，无远端 CI、上传、发布、虚拟机安装。
 
 “已有源码”与“能力通过”分开：下表的 Windows 项目全部尚未取得运行证据。Tauri 2 是候选实现，不是可行性已经通过的结论。当前已完成 Mac ARM64 的 Rust 核心编译及宿主共享代码检查；Windows 专属分支没有编译。
