@@ -48,7 +48,9 @@ python3 scripts/release.py --notes /绝对路径/更新说明.txt
 
 创建对应版本 tag 的 Release，上传完整附件后发布并设为 Latest。固定更新地址为：
 
-`https://github.com/WasdTornado/codex-hud-releases/releases/latest/download/appcast.xml`
+`https://github.com/WasdTornado/codex-hud/releases/latest/download/appcast.xml`
+
+仓库已改名为 `WasdTornado/codex-hud`。后续构建使用新仓库的更新源。已安装版本仍持有旧更新地址，通过 GitHub 的仓库改名跳转继续访问；历史安装包及已签名的更新清单不重写。不要重新创建同名的 `codex-hud-releases` 仓库，否则会破坏旧地址跳转。官网地址为 https://wasdtornado.github.io/codex-hud/ 。
 
 发布后回下载全部附件，核对哈希、appcast 版本、ZIP 长度和 EdDSA 签名；在旧版上验证发现新版及用户发起升级。正式安装更新要验证替换和重启后的版本。不要混用不同构建的 ZIP 与签名。
 

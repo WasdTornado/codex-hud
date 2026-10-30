@@ -2,7 +2,7 @@
 
 定稿采用原版 B 夜航布局。纯静态 HTML / CSS / JavaScript，无依赖、无构建步骤；通过 GitHub Pages 托管。
 
-官网：https://wasdtornado.github.io/codex-hud-releases/
+官网：https://wasdtornado.github.io/codex-hud/
 
 ## 预览
 
@@ -29,7 +29,7 @@ A、C、方案总览、设计切换条及旧精修样式已从官网移除；历
 
 当前官网直接下载已核实发布的 v1.1.3 Apple Silicon DMG，要求 macOS 26+。按钮旁明确展示版本，不自动推断用户芯片。浏览器自行处理下载与进度，网站不声称下载已完成。
 
-安装包直链：https://github.com/WasdTornado/codex-hud-releases/releases/download/v1.1.3/Codex-HUD-1.1.3-arm64.dmg
+安装包直链：https://github.com/WasdTornado/codex-hud/releases/download/v1.1.3/Codex-HUD-1.1.3-arm64.dmg
 
 发布新版后，应同步修改 index.html 内的版本文案、安装包文件名、直链、大小及 SHA256SUMS 链接，并实测下载。当前采用固定版本的附件直链，不依赖 GitHub API，避免未登录限流导致用户无法下载。不要将带版本的文件名直接拼到 releases/latest/download 后面，否则新版本移除旧文件名时会失效。
 

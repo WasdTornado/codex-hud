@@ -1,6 +1,6 @@
 {
-  "repository": "WasdTornado/codex-hud-releases",
-  "feedURL": "https://github.com/WasdTornado/codex-hud-releases/releases/latest/download/appcast.xml",
+  "repository": "WasdTornado/codex-hud",
+  "feedURL": "https://github.com/WasdTornado/codex-hud/releases/latest/download/appcast.xml",
   "publicEDKey": "a0V79vv/p3O+rboPhhndsefHsgMnh7L9sCfSeu06jRQ=",
   "keychainAccount": "com.wasdtornado.codexhud",
   "sparkleVersion": "2.10.0"
